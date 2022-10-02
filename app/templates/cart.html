@@ -1,0 +1,46 @@
+<!doctype html>
+<title>Store cart</title>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}" />
+</head>
+<body>
+    <div class="main">
+        <div class="nav">
+            <a href="/" class="nav-title">shop</a>
+            <a class="nav-cart">
+                <img class="nav-cart-img" src="../static/shopping-cart.png">
+                <span class="nav-cart-number-wrapper">
+                    {{cart_size}}
+                </span>
+            </a>
+        </div>
+        <div class="list">
+            <span class="list-title">Cart</span>
+            <div class="list-table">
+                {% for p in cart %}
+                <form method="post" id={{p.id}} class="cart-element" style="background-color: {{p.bgColor}}">
+                    <div class="cart-element-info">
+                        <span class="element-top-title">{{p.name}}</span>
+                        <span class="element-bottom-price" style="margin-top:15px">${{p.price|int}}</span>
+                    </div>
+                    <button name="index" value="{{loop.index}}" class="delete-flash">X</button>             
+                </form>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="buy">
+            {% if cart_size>0 %}
+            <span class="buy-total">${{total}}</span>
+            <a href="/checkout" class="buy-button">Buy Now  ></a>
+            {% else %}
+            <div class="buy-no-items">
+                <span class="no-items">Your cart is empty</span>
+                <a href="/" class="no-items-shop">SHOP</a>
+            </div>
+            
+            {% endif %}
+        </div>
+        
+    </div>
+</body>

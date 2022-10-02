@@ -1,0 +1,56 @@
+<!doctype html>
+<title>Store cart</title>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        function delete_flash(flash){
+            $(flash).parent().remove()
+        }
+    </script>
+</head>
+<body>
+    <div class="main">
+        <div class="nav">
+            <a href="/" class="nav-title">shop</a>
+            <a href="/cart" class="nav-cart">
+                <img class="nav-cart-img" src="../static/shopping-cart.png">
+                <span class="nav-cart-number-wrapper">
+                    {{cart_size}}
+                </span>
+            </a>
+        </div>
+        <form method="post" class="list">
+            <span class="list-title">Checkout</span>
+            <div class="input-wrapper">
+                <span class="input-wrapper-label">Your name</span>
+                <input name="name" class="input-wrapper-value" placeholder="e.g Jane Doe">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-wrapper-label">Your email</span>
+                <input name="email" class="input-wrapper-value" placeholder="e.g jane@company.co">
+            </div>
+
+            <div class="terms">
+                <div class="terms-button">
+                    <input name="check" type="checkbox" id="box" /><label for="box">Toggle</label>
+                </div>
+                <span class="terms-text">I agree to the terms and conditions</span>
+                
+            </div>
+
+            <button class="final-pay">
+                Pay ${{total}}
+            </button>
+
+            {% for message in get_flashed_messages() %}
+            <div class="flash-cart">
+                {{message}}
+                <span class="delete-flash" onclick="delete_flash(this)">X</span>
+            </div>
+            {% endfor %}
+            
+        </form>
+        
+    </div>
+</body>

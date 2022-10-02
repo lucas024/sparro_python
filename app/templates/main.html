@@ -1,0 +1,60 @@
+<!doctype html>
+<title>Store</title>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        function delete_flash(flash){
+            $(flash).parent().remove()
+        }
+    </script>
+</head>
+<body>
+    <div class="main">
+        <div class="nav">
+            <a class="nav-title">shop</a>
+            <a href="/cart" class="nav-cart">
+                <img class="nav-cart-img" src="../static/shopping-cart.png">
+                <span class="nav-cart-number-wrapper">
+                    {{cart_size}}
+                </span>
+            </a>
+        </div>
+        <div class="list">
+            <span class="list-title">Products</span>
+            <div class="list-table">
+                {% for p in data.products %}
+                <form method="post" id={{p.id}} class="table-element">
+                    <div class="element-img-wrapper" style="background-color: {{p.bgColor}}">
+                        <img class="element-img" src="../static/design/images/{{p.id}}.png">
+                    </div>
+                    <div class="element-info">
+                        <div class="element-top">
+                            <span class="element-top-type">{{p.category}}</span>
+                            <span class="element-top-title">{{p.name}}</span>
+                        </div>
+                        <div class="element-bottom">
+                            <span class="element-bottom-price">${{p.price|int}}</span>
+                            <button name="object" value="{{p}}" class="element-bottom-button">
+                                <span class="element-bottom-button-add">Add</span>
+                                <span class="element-bottom-button-plus">+</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </form>
+                {% endfor %}
+
+            </div>
+        </div>
+        {% for message in get_flashed_messages() %}
+            <div class="flash">
+                {{message}}
+                <span class="delete-flash" onclick="delete_flash(this)">X</span>
+            </div>
+        {% endfor %}
+
+    </div>
+
+</body>
